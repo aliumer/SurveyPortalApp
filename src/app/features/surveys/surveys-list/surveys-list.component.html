@@ -1,0 +1,22 @@
+<p>surveys-list works!</p>
+
+<table *ngIf="SurveyList$ | async as surveys" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Survey</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Questions</th>
+            <th>Preview Survey</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let s of surveys">
+            <td>{{s.surveyName}}</td>
+            <td>{{s.startDate | date :'fullDate'}}</td>
+            <td>{{s.endDate | date:'fullDate' }}</td>
+            <td><a routerLink="/add-question">Add Questions</a></td>
+            <td><a routerLink="/preview-survey">Preview</a></td>
+        </tr>
+    </tbody>
+</table>

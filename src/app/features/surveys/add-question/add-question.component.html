@@ -1,0 +1,109 @@
+<div class="card">
+    <div class="card-header">Add Question</div>
+    <div class="card-body">
+        <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+            <div class="card">
+                <div class="card-header">Question:</div>
+                <div class="card-body">
+                    <div class="field">
+                        <label for="QuestionType">Type: </label>
+                        <select formControlName="QuestionType" (change)="selectQuestionType($event.target)">
+                            <option value="">Please select</option>
+                            <option *ngFor="let q of questionTypes" [value]="q.value">{{q.title}}</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="Question">Question: </label>
+                        <input type="text" formControlName="Question" placeholder="Question">
+                    </div>
+                </div>
+            </div>
+    
+            <!-- <div class="card" *ngIf="ArrayOfRange.length > 0">
+                <div class="card-header">Range <input type="button" value="Add" (click)="AddRange()" /></div>
+                <div class="card-body" formArrayName="Range">
+                    <div *ngFor="let r of ArrayOfRange.controls; let  i=index" formGroupName="i">
+                        <div>
+                            <input type="button" value="Remove" (click)="RemoveRange(i)" />
+                            <div class="field">
+                                <label for="startText">Start Text</label>
+                                <input formControlName="startText" placeholder="Start Text" />
+                            </div>
+                            <div class="field">
+                                <label for="endText">End Text</label>                            
+                                <input formControlName="endText" placeholder="End Text" />
+                            </div>
+                            <div class="field">
+                                <label for="Minimum">Minimum</label>
+                                <input type="number" formControlName="min" placeholder="Minimum" />
+                            </div>
+                            <div class="field">
+                                <label for="Maximum">Maximum</label>
+                                <input type="number" formControlName="max" placeholder="Maximum" />
+                            </div>
+                            <div class="field">
+                                <label for="interval">Interval</label>
+                                <input type="number" formControlName="interval" placeholder="Interval" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            
+            <div class="card" *ngIf="ArrayOfOptions.length > 0">
+                <div class="card-header">Options <input type="button" value="Add" (click)="AddOptions()" /></div>
+                <div class="card-body" formArrayName="Options">
+                    <div *ngFor="let r of ArrayOfOptions.controls; let  i=index;" formArrayName="{{i}}">
+                        <ng-container *ngTemplateOutlet="isRange ? rangeTemplate : labelTemplate; context: i">
+                        </ng-container>
+                        <!-- <div class="field">
+                            <input formControlName="Text" placeholder="Caption" />
+                            <input type="button" value="Remove" (click)="RemoveOptions(i)" />
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            
+            <ng-template #labelTemplate let-index>
+                <div class="field">
+                    <input formControlName="Label" placeholder="Caption" />
+                    <input type="button" value="Remove" (click)="RemoveOptions(index)" />
+                </div>
+            </ng-template>
+        
+            <ng-template #rangeTemplate  let-index>
+                <div>
+                    <input type="button" value="Remove" (click)="RemoveOptions(index)" />
+                    <div class="field">
+                        <label for="startText">Start Text</label>
+                        <input formControlName="startText" placeholder="Start Text" />
+                    </div>
+                    <div class="field">
+                        <label for="endText">End Text</label>                            
+                        <input formControlName="endText" placeholder="End Text" />
+                    </div>
+                    <div class="field">
+                        <label for="Minimum">Minimum</label>
+                        <input type="number" formControlName="min" placeholder="Minimum" />
+                    </div>
+                    <div class="field">
+                        <label for="Maximum">Maximum</label>
+                        <input type="number" formControlName="max" placeholder="Maximum" />
+                    </div>
+                    <div class="field">
+                        <label for="interval">Interval</label>
+                        <input type="number" formControlName="interval" placeholder="Interval" />
+                    </div>
+                </div>
+            </ng-template>
+        
+            <div class="card">
+                <div class="card-body">
+                    <button class="btn btn-primary btn-sm" type="button">Cancel</button>&nbsp;
+                    <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
