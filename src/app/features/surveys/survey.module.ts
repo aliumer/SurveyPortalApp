@@ -8,9 +8,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 @NgModule({
     imports: [
         RouterModule,
-        CommonModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        CommonModule,
     ],
     declarations: [
         AddQuestionComponent,

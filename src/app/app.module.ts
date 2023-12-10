@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { SurveyModule } from './features/surveys/survey.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,8 @@ import { SurveyModule } from './features/surveys/survey.module';
   ],
   imports: [ 
     BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
