@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, map, tap } from 'rxjs';
+import { Question } from 'src/app/core/models/question.model';
+import { QuestionService } from 'src/app/core/services/question.service';
 import { SurveyService } from 'src/app/core/services/survey.service';
 
 @Component({
@@ -11,12 +14,38 @@ import { SurveyService } from 'src/app/core/services/survey.service';
 export class SurveysListComponent implements OnInit {
 
   SurveyList$!: Observable<any>;
-
-  constructor(private surveyService: SurveyService) { }
+  questionList$!: Observable<Question[]>;
+  constructor(private surveyService: SurveyService,
+    private questionService: QuestionService, 
+    private router: Router) { }
 
   ngOnInit(): void {
     this.SurveyList$ = this.surveyService.GetSurveys();
   }
 
+  showQuestions(surveyId: number) {
+    this.questionList$ = this.SurveyList$.pipe(
+      map(data => {
+        return data.filter((s: any) => s.id === surveyId)[0].questions
+      })
+    )
+  }
+
+  deleteQuestion(id: number) {
+    console.log('Deleting question: ', id);
+    this.questionService.deleteQuestion(id).subscribe(
+      (response) => { 
+        this.SurveyList$ = this.surveyService.GetSurveys();
+      },
+      (err) => { 
+        console.dir(err);
+      },
+
+    );
+  }
+
+  addSurvey() {
+    this.router.navigate(['surveys/add']);
+  }
 
 }

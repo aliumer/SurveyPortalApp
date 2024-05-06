@@ -1,0 +1,25 @@
+<div class="card">
+    <div class="card-header">{{title}}</div>
+    <div class="card-body">
+        <div *ngIf="!!message" class="alert alert-success">{{message}}</div>
+        <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+            <div class="field">
+                <label for="SurveyName">SurveyName: </label>
+                <input type="text" formControlName="SurveyName" placeholder="Survey Name">
+            </div>
+            <div class="field">
+                <label for="StartDate">Start Date: </label>
+                <input type="date" formControlName="StartDate" placeholder="Start date">
+            </div>
+            <div class="field">
+                <label for="EndDate">End Date: </label>
+                <input type="date" formControlName="EndDate" placeholder="End Date">
+            </div>
+            <div class="card-body">
+                <button class="btn btn-primary btn-sm" type="button">Cancel</button>&nbsp;
+                <!-- <button class="btn btn-primary btn-sm" type="submit">Save</button> -->
+                <input class="btn btn-primary btn-sm" type="submit" value="Save">
+            </div>
+        </form>
+    </div>
+</div>

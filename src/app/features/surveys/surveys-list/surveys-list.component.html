@@ -1,22 +1,44 @@
-<p>surveys-list works!</p>
-
+<button (click)="addSurvey()">Add Survey</button>
 <table *ngIf="SurveyList$ | async as surveys" class="table table-striped">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Survey</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Questions List</th>
             <th>Questions</th>
             <th>Preview Survey</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let s of surveys">
+            <td>{{s.id}}</td>
             <td>{{s.surveyName}}</td>
             <td>{{s.startDate | date :'fullDate'}}</td>
             <td>{{s.endDate | date:'fullDate' }}</td>
-            <td><a routerLink="/add-question">Add Questions</a></td>
-            <td><a routerLink="/preview-survey">Preview</a></td>
+            <td><button (click)="showQuestions(s.id)">show questions</button></td>
+            <td><a [routerLink]="[s.id, 'questions', 'create']">Add Questions</a></td>
+            <td><a [routerLink]="[s.id, 'preview']">Preview</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<table *ngIf="questionList$ | async as Questions" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Question Type</th>
+            <th>Question</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let q of Questions">
+            <td>{{q.questionType}}</td>
+            <td>{{q.questionText}}</td>
+            <td><a [routerLink]="[q.surveyId, 'questions', q.id, 'edit']">Edit</a></td>
+            <td><a href="javascript: void(0);" (click)="deleteQuestion(q.id)">Delete</a></td>
         </tr>
     </tbody>
 </table>

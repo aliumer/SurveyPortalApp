@@ -1,78 +1,103 @@
 <div class="card">
-    <div class="card-header">Add Question</div>
+    <div class="card-header">{{title}}</div>
     <div class="card-body">
-        <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
-            <div class="card">
-                <div class="card-header">Question:</div>
-                <div class="card-body">
-                    <div class="field">
-                        <label for="QuestionType">Type: </label>
-                        <select formControlName="QuestionType" (change)="selectQuestionType($event.target)">
-                            <option value="">Please select</option>
-                            <option *ngFor="let q of questionTypes" [value]="q.value">{{q.title}}</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="Question">Question: </label>
-                        <input type="text" formControlName="Question" placeholder="Question">
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" *ngIf="ArrayOfOptions.length > 0">
-                <div class="card-header">Options <input type="button" value="Add" (click)="AddOptions()" /></div>
-                <div class="card-body">
-                    <ng-container *ngTemplateOutlet="isRange ? rangeTemplate : labelTemplate;">
-                    </ng-container>
-                </div>
-            </div>
-
-            <ng-template #labelTemplate>
-                <div formArrayName="Options">
-                    <div *ngFor="let r of ArrayOfOptions.controls; let  i=index;" formGroupName="{{i}}">
+        <div *ngIf="!!message" class="alert alert-success">{{message}}</div>
+        <div class="register-form">
+            <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+                <div class="card">
+                    <div class="card-header">Question:</div>
+                    <div class="card-body">
                         <div class="field">
-                            <input formControlName="Label" placeholder="Caption" />
+                            <label for="questionType">Type: </label>
+                            <select formControlName="questionType" (change)="selectQuestionType($event.target)">
+                                <option value="">Please select</option>
+                                <option *ngFor="let q of questionTypes" [value]="q.value">{{q.title}}</option>
+                            </select>
+                            <div class="q-type-message">
+                                <span *ngIf="hideMsg">To change the question type, Please remove all the options</span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="questionText">Question: </label>
+                            <input class="form-control" type="text" formControlName="questionText">
+                            <div *ngIf="!questionForm.controls['questionText'].valid" class="text-danger">
+                                <div>Question is required</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" *ngIf="ArrayOfOptions.length > 0">
+                    <div class="card-header">Options <input type="button" value="Add" (click)="AddOptions()" /></div>
+                    <div class="card-body">
+                        <ng-container *ngTemplateOutlet="isRange ? rangeTemplate : labelTemplate;">
+                        </ng-container>
+                    </div>
+                </div>
+
+                <ng-template #labelTemplate>
+                    <div formArrayName="options">
+                        <div *ngFor="let r of ArrayOfOptions.controls; let  i=index;" formGroupName="{{i}}">
+                            <div class="field">
+                                <input formControlName="label" placeholder="Caption" />&nbsp;
+                                <input type="button" value="Remove" (click)="RemoveOptions(i)" />
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <ng-template #rangeTemplate>
+                    <div formArrayName="options">
+                        <div *ngFor="let ctrl of ArrayOfOptions.controls; let  i=index;" formGroupName="{{i}}">
                             <input type="button" value="Remove" (click)="RemoveOptions(i)" />
+                            <div class="field">
+                                
+                                <label for="startText">Start Text</label>
+                                <input type="text" formControlName="startText" placeholder="Start Text" />
+                                <div *ngIf="!ctrl.pristine && !ctrl.valid" class="text-danger">
+                                    start text is required
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="endText">End Text</label>
+                                <input type="text" formControlName="endText" placeholder="End Text" />
+                                <div *ngIf="!ctrl.valid" class="text-danger">
+                                    End text is required
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="min">Minimum</label>
+                                <input type="number" formControlName="min" placeholder="Minimum" />
+                                <div *ngIf="!ctrl.valid" class="text-danger">
+                                    Minimum is required
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="max">Maximum</label>
+                                <input type="number" formControlName="max" placeholder="Maximum" />
+                                <div *ngIf="!ctrl.valid" class="text-danger">
+                                    Maximum is required
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="interval">Interval</label>
+                                <input type="number" formControlName="interval" placeholder="Interval" />
+                                <div *ngIf="!ctrl.valid" class="text-danger">
+                                    Interval is required
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </ng-template>
+                </ng-template>
 
-            <ng-template #rangeTemplate>
-                <div formArrayName="Options">
-                    <div *ngFor="let r of ArrayOfOptions.controls; let  i=index;" formGroupName="{{i}}">
-                        <input type="button" value="Remove" (click)="RemoveOptions(i)" />
-                        <div class="field">
-                            <label for="startText">Start Text</label>
-                            <input formControlName="startText" placeholder="Start Text" />
-                        </div>
-                        <div class="field">
-                            <label for="endText">End Text</label>
-                            <input formControlName="endText" placeholder="End Text" />
-                        </div>
-                        <div class="field">
-                            <label for="Minimum">Minimum</label>
-                            <input type="number" formControlName="min" placeholder="Minimum" />
-                        </div>
-                        <div class="field">
-                            <label for="Maximum">Maximum</label>
-                            <input type="number" formControlName="max" placeholder="Maximum" />
-                        </div>
-                        <div class="field">
-                            <label for="interval">Interval</label>
-                            <input type="number" formControlName="interval" placeholder="Interval" />
-                        </div>
+                <div class="card">
+                    <div class="card-body">
+                        <button class="btn btn-primary btn-sm" type="button">Cancel</button>&nbsp;
+                        <button class="btn btn-primary btn-sm" type="submit">Save</button>
                     </div>
                 </div>
-            </ng-template>
 
-            <div class="card">
-                <div class="card-body">
-                    <button class="btn btn-primary btn-sm" type="button">Cancel</button>&nbsp;
-                    <button class="btn btn-primary btn-sm" type="submit">Save</button>
-                </div>
-            </div>
-
-        </form>
+            </form>
+        </div>
     </div>
 </div>
