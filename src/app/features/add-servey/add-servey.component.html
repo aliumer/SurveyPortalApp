@@ -6,15 +6,24 @@
             <div class="field">
                 <label for="SurveyName">SurveyName: </label>
                 <input type="text" formControlName="SurveyName" placeholder="Survey Name">
+                <p>
+                   <span class="form-error" *ngIf="submitted && surveyForm.controls['SurveyName'].errors?.['required']">Survey name is required</span>
+                </p>                
             </div>
             <div class="field">
                 <label for="StartDate">Start Date: </label>
                 <input type="date" formControlName="StartDate" placeholder="Start date">
-            </div>
+                <p>
+                    <span class="form-error" *ngIf="submitted && surveyForm.controls['StartDate'].errors?.['required']">Start date is required</span>
+                 </p>                
+             </div>
             <div class="field">
                 <label for="EndDate">End Date: </label>
                 <input type="date" formControlName="EndDate" placeholder="End Date">
-            </div>
+                <p>
+                    <span class="form-error" *ngIf="submitted && surveyForm.controls['EndDate'].errors?.['required']">End date is required</span>
+                 </p>                
+             </div>
             <div class="card-body">
                 <button class="btn btn-primary btn-sm" type="button">Cancel</button>&nbsp;
                 <!-- <button class="btn btn-primary btn-sm" type="submit">Save</button> -->

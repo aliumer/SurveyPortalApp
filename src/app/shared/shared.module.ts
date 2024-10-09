@@ -4,11 +4,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { LoadingIndicatorComponent } from './components/loading-indicator/loading-indicator.component';
 
 @NgModule({
   declarations: [
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoadingIndicatorComponent
   ],
   imports: [
     RouterModule,
@@ -16,7 +18,8 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoadingIndicatorComponent
   ]
 })
 export class SharedModule { }

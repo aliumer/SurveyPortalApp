@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SurveyService } from 'src/app/core/services/survey.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { SurveyService } from 'src/app/core/services/survey.service';
   styleUrls: ['./add-servey.component.scss']
 })
 export class AddServeyComponent implements OnInit {
-
+  submitted = false;
   surveyForm!: FormGroup;
   title = 'Create New Survey';
   message!: string;
@@ -21,19 +21,21 @@ export class AddServeyComponent implements OnInit {
   ngOnInit(): void {
     this.surveyForm = this.fb.nonNullable.group({
       id: '',
-      SurveyName: '',
-      StartDate: '',
-      EndDate: '',
+      SurveyName: ['', Validators.required],
+      StartDate: ['', Validators.required],
+      EndDate: ['', Validators.required],
       Questions: this.fb.array([]),
     });
   }
 
   onSubmit() {
+    this.submitted = true;
    if (this.surveyForm.valid) {
-    console.log(this.surveyForm.value);
     this.surveyService.createSurvey(this.surveyForm.value).subscribe(
       (res) => {
         this.message = 'Survey created successfully.'
+        this.surveyForm.reset();
+        this.submitted = false;
       },
       (err) => {
         console.log('Error occured while trying to save the survey.');
@@ -41,6 +43,8 @@ export class AddServeyComponent implements OnInit {
         this.message = `Status Code ${err.status} ${err.message}`;
       }
     );
+   } else {
+    console.log(this.surveyForm.valid);
    }
   }
 

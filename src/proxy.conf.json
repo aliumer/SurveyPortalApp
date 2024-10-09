@@ -1,0 +1,30 @@
+{
+    "/surveyApi": {
+      "target": "https://localhost:7180/survey/",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": {
+        "^/surveyApi": ""
+      }
+    },
+    "/question": {
+        "target": "https://localhost:7180/question",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug",
+        "pathRewrite": {
+          "^/question": ""
+        }
+      },
+    "/employee": {
+        "target": "https://localhost:7180/employee",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug",
+        "pathRewrite": {
+          "^/employee": ""
+        }
+      }
+}
+  
